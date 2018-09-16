@@ -1,4 +1,10 @@
 import os
-for root, dirs, files in os.walk("c:\\Users\\siggi\\Downloads\\"):
+
+scanndir = "c:\\Users\\siggi\\Downloads\\";
+
+for root, dirs, files in os.walk(scanndir):
 	for file in files:
-		print(root +" - " +file)
+		path = os.path.join(root, file)
+		print(path)
+		print(os.stat(path)[8])
+		print()
