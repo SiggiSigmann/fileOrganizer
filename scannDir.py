@@ -1,6 +1,7 @@
 import os
 import time
 import re
+import filecmp
 
 #scanns the given directory and return all folders witch consists out of 4
 #digits as an arrayself.
@@ -34,7 +35,6 @@ def scannDirectory(scanndir, endings = "non"):
 			if os. path. isfile(path):
 				filename, file_extension = os.path.splitext(path)
 				if endings == "non":
-					print("non")
 					filesToSort.append(path)
 				elif endings == file_extension[1:]:
 					filesToSort.append(path)
@@ -53,13 +53,24 @@ def sortFiles(sortdir, yearfolder, filesToSort):
 		(year, month, day, hours, minutes, seconds, wday, ydey, test)= time.localtime(os.stat(file)[8])	#calculate cration date
 		year = str(year)
 		if year in yearfolder:
-			print(os.path.join(sortdir,basename))
-			#os.rename(file,os.path.join(os.path.join(sortdir,year),basename))
-			print(os.path.join(os.path.join(sortdir,year),basename))
+			fileNew = os.path.join(os.path.join(sortdir,year),basename)				#make path to file in sorted directory
+			try:
+				os.rename(file, fileNew)											#move file
+			except Exception:
+				if filecmp.cmp(file, fileNew):										#check if the files are the same
+					os.remove(file)
+				else:
+					print (file +"is differnet then "+fileNew)
 		else:
 			os.mkdir(os.path.join(sortdir,year))
 			yearfolder.append(year)
-			os.rename(file,os.path.join(os.path.join(sortdir,year),basename))
+			try:
+				os.rename(file, fileNew)											#move file
+			except Exception:
+				if filecmp.cmp(file, fileNew):										#check if the files are the same
+					os.remove(file)
+				else:
+					print (file +"is differnet then "+fileNew)
 
 #The function takes two path and sorts the files in the first path and then
 #copy it to argument two. The files can be filtered by the endingsself.
@@ -78,5 +89,3 @@ scanndir = "c:\\Users\\siggi\\Downloads\\"
 sortdir = "c:\\Users\\siggi\\Desktop\\sort\\"
 
 runSort(scanndir, sortdir)
-
-#TODO: try-catch
