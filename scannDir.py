@@ -61,11 +61,22 @@ def sortFiles(sortdir, yearfolder, filesToSort):
 			yearfolder.append(year)
 			os.rename(file,os.path.join(os.path.join(sortdir,year),basename))
 
+#The function takes two path and sorts the files in the first path and then
+#copy it to argument two. The files can be filtered by the endingsself.
+#
+#@param scanndir	: diretory which have to be sorted
+#@param sortdir		: directory which will contain the files avert being sorted
+#@param endings		: (optional)the ending which can be used as a filter
+def runSort(scanndir,sortdir,endings = "non"):
+	yearfolder = checkSortDir(sortdir)
+	filesToSort = scannDirectory(scanndir)
+	sortFiles(sortdir, yearfolder, filesToSort)
+
 
 
 scanndir = "c:\\Users\\siggi\\Downloads\\"
 sortdir = "c:\\Users\\siggi\\Desktop\\sort\\"
 
-yearfolder = checkSortDir(sortdir)
-filesToSort = scannDirectory(scanndir)
-sortFiles(sortdir, yearfolder, filesToSort)
+runSort(scanndir, sortdir)
+
+#TODO: try-catch
