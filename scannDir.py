@@ -22,24 +22,27 @@ def scannDirectory(scanndir):
 			path = os.path.join(root, file)
 			if os. path. isfile(path):
 				filesToSort.append(path)
-				print(path)
 	print(str(len(filesToSort)) + " files was found.")
 	return filesToSort
 
-def sortFiles(scanndir, yearfolder, filesToSort):
+def sortFiles(sortdir, yearfolder, filesToSort):
 	for file in filesToSort:
+		basename = os.path.basename(file)
 		(year, month, day, hours, minutes, seconds, wday, ydey, test)= time.localtime(os.stat(file)[8])	#calculate cration date
-		print(str(year) + " "+ str(month) + " "+ str(day))
+		year = str(year)
 		if year in yearfolder:
-			print("ok")
+			print(os.path.join(sortdir,basename))
+			os.rename(file,os.path.join(os.path.join(sortdir,year),basename))
 		else:
-			print("false")
+			os.mkdir(os.path.join(sortdir,year))
+			yearfolder.append(year)
+			os.rename(file,os.path.join(os.path.join(sortdir,year),basename))
 
 
 
-scanndir = "c:\\Users\\siggi\\Downloads\\";
-sortdir = "c:\\Users\\siggi\\Desktop\\sort\\";
+scanndir = "c:\\Users\\siggi\\Downloads\\"
+sortdir = "c:\\Users\\siggi\\Desktop\\sort\\"
 
 yearfolder = checkSortDir(sortdir)
 filesToSort = scannDirectory(scanndir)
-sortFiles(scanndir, yearfolder, filesToSort);
+sortFiles(sortdir, yearfolder, filesToSort)
