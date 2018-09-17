@@ -56,9 +56,9 @@ def sortFiles(sortdir, yearfolder, filesToSort):
 		year = str(year)
 		if year in yearfolder:
 			fileNew = os.path.join(os.path.join(sortdir,year),basename)				#make path to file in sorted directory
-			try:
+			if !os.path.isfile(fileNew):
 				os.rename(file, fileNew)											#move file
-			except Exception:
+			else:
 				if filecmp.cmp(file, fileNew):										#check if the files are the same
 					os.remove(file)
 				else:
@@ -67,9 +67,9 @@ def sortFiles(sortdir, yearfolder, filesToSort):
 		else:
 			os.mkdir(os.path.join(sortdir,year))
 			yearfolder.append(year)
-			try:
+			if !os.path.isfile(fileNew):
 				os.rename(file, fileNew)											#move file
-			except Exception:
+			else:
 				if filecmp.cmp(file, fileNew):										#check if the files are the same
 					os.remove(file)
 				else:
@@ -85,19 +85,18 @@ def askWhatToDo(originalErrorInFiles, sortedErrorInFiles):
 	if originalErrorInFiles:
 		print(str(len(originalErrorInFiles)) + " conflicts")
 		print("0 - do nothing")
-		print("type in which file should be deleted")
 		for i in range(len(originalErrorInFiles)):
 			acceptInput = 1
 			while acceptInput:
 				print("-----------------------")
-				print("(1)"+originalErrorInFiles[i] + " (2)" + sortedErrorInFiles[i])
+				print("(1)delete "+originalErrorInFiles[i] + "\n(2)delete " + sortedErrorInFiles[i])
+				print("(3) rename file")
 				userInput = "error"
-				
+
 				try:
 					userInput = int(input("Do action: "))
 				except ValueError:
 					print("wrong input")
-
 				if userInput == 0:
 					acceptInput = 0
 				elif userInput == 1:
@@ -105,6 +104,15 @@ def askWhatToDo(originalErrorInFiles, sortedErrorInFiles):
 					acceptInput = 0
 				elif userInput == 2:
 					os.remove(sortedErrorInFiles[i])
+					acceptInput = 0
+				elif userInput == 3:
+					filecounter = 0
+					fileNew = sortedErrorInFiles[i]
+					while(os.path.isfile(fileNew)):
+						filecounter += 1
+						fileNew = sortedErrorInFiles[i]+"_rename_"+str(filecounter)
+					os.rename(originalErrorInFiles[i], fileNew)						#move file
+					print(originalErrorInFiles[i] + " renamed to " + fileNew)
 					acceptInput = 0
 				else:
 					print("Not accepted input.")
@@ -129,5 +137,3 @@ scanndir = "c:\\Users\\siggi\\Downloads\\"
 sortdir = "c:\\Users\\siggi\\Desktop\\sort\\"
 
 runSort(scanndir, sortdir)
-
-#TODO:add rename option
