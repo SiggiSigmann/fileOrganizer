@@ -56,7 +56,7 @@ def sortFiles(sortdir, yearfolder, filesToSort):
 		year = str(year)
 		if year in yearfolder:
 			fileNew = os.path.join(os.path.join(sortdir,year),basename)				#make path to file in sorted directory
-			if !os.path.isfile(fileNew):
+			if not os.path.isfile(fileNew):
 				os.rename(file, fileNew)											#move file
 			else:
 				if filecmp.cmp(file, fileNew):										#check if the files are the same
@@ -67,7 +67,7 @@ def sortFiles(sortdir, yearfolder, filesToSort):
 		else:
 			os.mkdir(os.path.join(sortdir,year))
 			yearfolder.append(year)
-			if !os.path.isfile(fileNew):
+			if not os.path.isfile(fileNew):
 				os.rename(file, fileNew)											#move file
 			else:
 				if filecmp.cmp(file, fileNew):										#check if the files are the same
@@ -131,9 +131,3 @@ def runSort(scanndir,sortdir,endings = "non"):
 	filesToSort = scannDirectory(scanndir)
 	originalErrorInFiles, sortedErrorInFiles = sortFiles(sortdir, yearfolder, filesToSort)
 	askWhatToDo(originalErrorInFiles, sortedErrorInFiles)
-
-
-scanndir = "c:\\Users\\siggi\\Downloads\\"
-sortdir = "c:\\Users\\siggi\\Desktop\\sort\\"
-
-runSort(scanndir, sortdir)
