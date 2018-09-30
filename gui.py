@@ -1,6 +1,7 @@
 import  tkinter as tk
 from tkinter import *
 from sortDir import *
+from question import *
 
 class Gui(tk.Tk):
 	def __init__(self, *args, **kwargs):
@@ -82,27 +83,29 @@ class Gui(tk.Tk):
 			self.stopButton.invoke()
 
 	def askWhatToDo(self, number, sourceImage, destImage):
-		mul=5
-		self.seperator = tk.Canvas(width=self.windowlenghth, height=10)
-		self.seperator.grid(row=number*mul+4, column=0, columnspan=3)
-		self.seperator.create_line(0, 5, self.windowlenghth, 5, width=1, fill="gray")
-
-		self.sourcePicture = tk.Canvas(width=100, height=100, background="green")
-		self.sourcePicture.grid(row=number*mul+5, column=0, rowspan=4)
-
-		self.sourcePicture = tk.Canvas(width=100, height=100, background="blue")
-		self.sourcePicture.grid(row=number*mul+5, column=3, rowspan=4)
-
-		self.radioOption1 = tk.Radiobutton(text="1", variable=self.v, value=0)
-		self.radioOption2 = tk.Radiobutton(text="2", variable=self.v, value=1)
-		self.radioOption3 = tk.Radiobutton(text="3", variable=self.v, value=2)
-		self.radioOption4 = tk.Radiobutton(text="4", variable=self.v, value=3)
-
-		self.radioOption1.grid(row=number*mul+5, column=2)
-		self.radioOption2.grid(row=number*mul+6, column=2)
-		self.radioOption3.grid(row=number*mul+7, column=2)
-		self.radioOption4.grid(row=number*mul+8, column=2)
-
+#		mul=5
+#		self.seperator = tk.Canvas(width=self.windowlenghth, height=10)
+#		self.seperator.grid(row=number*mul+4, column=0, columnspan=3)
+#		self.seperator.create_line(0, 5, self.windowlenghth, 5, width=1, fill="gray")
+#
+#		self.sourcePicture = tk.Canvas(width=100, height=100, background="green")
+#		self.sourcePicture.grid(row=number*mul+5, column=0, rowspan=4)
+##
+#		self.sourcePicture = tk.Canvas(width=100, height=100, background="blue")
+#		self.sourcePicture.grid(row=number*mul+5, column=3, rowspan=4)
+#
+#		self.radioOption1 = tk.Radiobutton(text="1", variable=self.v, value=0)
+#		self.radioOption2 = tk.Radiobutton(text="2", variable=self.v, value=1)
+#		self.radioOption3 = tk.Radiobutton(text="3", variable=self.v, value=2)
+#		self.radioOption4 = tk.Radiobutton(text="4", variable=self.v, value=3)
+#
+#		self.radioOption1.grid(row=number*mul+5, column=2)
+#		self.radioOption2.grid(row=number*mul+6, column=2)
+#		self.radioOption3.grid(row=number*mul+7, column=2)
+#		self.radioOption4.grid(row=number*mul+8, column=2)
+		print(number)
+		self.question1 = Ask(self);
+		self.question1.grid(row=number+5, column=0, columnspan=4)
 
 
 app = Gui("sort")
