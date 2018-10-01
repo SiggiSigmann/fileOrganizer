@@ -29,6 +29,8 @@ class Gui(tk.Tk):
 		self.stopButton = tk.Button( text="Stop", command=self.stopProcess)
 		self.stopButton .bind('<Key>', self.stopKeyListener)
 
+		self.scroll = tk.Scrollbar()
+
 		self.sourceDescription.grid(row=0, column=0, padx=5, pady=5)
 		self.sourceLocation.grid(row=0, column=1, padx=5, pady=5)
 		self.sourceChoos.grid(row=0, column=2,padx=5, pady=5)
@@ -40,9 +42,14 @@ class Gui(tk.Tk):
 		self.startButton.grid(row=3,column=0)
 		self.stopButton.grid(row=3,column=2)
 
+		self.scroll.grid(row=4, column=3)
+
+		self.listbox = tk.Canvas(yscrollcommand=self.scroll.set, height=100, background="yellow")
+		self.listbox.grid(row=4, column=0, columnspan=2)
+
+		self.scroll.config(command=self.listbox.yview)
+
 		self.update()
-
-
 
 	def startProcess(self):
 		yearfolder = checkSortDir(self.destLocation.get())
@@ -86,29 +93,9 @@ class Gui(tk.Tk):
 			self.stopButton.invoke()
 
 	def askWhatToDo(self, number, sourceImage, destImage):
-#		mul=5
-#		self.seperator = tk.Canvas(width=self.windowlenghth, height=10)
-#		self.seperator.grid(row=number*mul+4, column=0, columnspan=3)
-#		self.seperator.create_line(0, 5, self.windowlenghth, 5, width=1, fill="gray")
-#
-#		self.sourcePicture = tk.Canvas(width=100, height=100, background="green")
-#		self.sourcePicture.grid(row=number*mul+5, column=0, rowspan=4)
-##
-#		self.sourcePicture = tk.Canvas(width=100, height=100, background="blue")
-#		self.sourcePicture.grid(row=number*mul+5, column=3, rowspan=4)
-#
-#		self.radioOption1 = tk.Radiobutton(text="1", variable=self.v, value=0)
-#		self.radioOption2 = tk.Radiobutton(text="2", variable=self.v, value=1)
-#		self.radioOption3 = tk.Radiobutton(text="3", variable=self.v, value=2)
-#		self.radioOption4 = tk.Radiobutton(text="4", variable=self.v, value=3)
-#
-#		self.radioOption1.grid(row=number*mul+5, column=2)
-#		self.radioOption2.grid(row=number*mul+6, column=2)
-#		self.radioOption3.grid(row=number*mul+7, column=2)
-#		self.radioOption4.grid(row=number*mul+8, column=2)
-		print(number)
-		self.question1 = Ask(self, "1.png", "2.png");
-		self.question1.grid(row=number+5, column=0, columnspan=4)
+		Ask(self.listbox, "1.png", "2.png").grid(row=1+number, column=2)
+		#self.question1 = Ask(self, "1.png", "2.png");
+		#self.question1.grid(row=number+5, column=0, columnspan=4)
 
 app = Gui("sort")
 app.mainloop()
