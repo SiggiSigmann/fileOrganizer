@@ -2,6 +2,7 @@ import  tkinter as tk
 from tkinter import *
 from sortDir import *
 from question import *
+import os
 
 class Gui(tk.Tk):
 	def __init__(self, *args, **kwargs):
@@ -9,6 +10,8 @@ class Gui(tk.Tk):
 		self.setUpGui()
 		self.counter=0
 		self.v = IntVar()
+
+
 
 	def setUpGui(self):
 		self.sourceDescription = tk.Label( text="Files to sort:")
@@ -104,9 +107,8 @@ class Gui(tk.Tk):
 #		self.radioOption3.grid(row=number*mul+7, column=2)
 #		self.radioOption4.grid(row=number*mul+8, column=2)
 		print(number)
-		self.question1 = Ask(self);
+		self.question1 = Ask(self, "1.png", "2.png");
 		self.question1.grid(row=number+5, column=0, columnspan=4)
-
 
 app = Gui("sort")
 app.mainloop()
